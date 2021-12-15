@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'listar',
+    redirectTo: 'list',
     pathMatch: 'full',
   },
 ];

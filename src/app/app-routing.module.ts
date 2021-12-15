@@ -6,7 +6,6 @@ const routes: Routes = [
     path: 'heroes',
     loadChildren: () =>
       import('./pages/heroes/heroes.module').then((m) => m.HeroesModule),
-    pathMatch: 'full',
   },
   {
     path: '',
