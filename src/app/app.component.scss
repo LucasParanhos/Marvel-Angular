@@ -1,0 +1,47 @@
+@import "variables.scss";
+
+.header {
+  .mat-toolbar {
+    background-color: $white;
+  }
+
+  .dados {
+    font-size: 12px;
+    line-height: 14px;
+    text-align: right;
+    margin-left: auto;
+    margin-right: 10px;
+    color: $dark-gray;
+    @media screen and (max-width: $mobile-max-width) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nome {
+      margin-right: 5px;
+      font-weight: bold;
+
+      @media screen and (max-width: $mobile-max-width) {
+        margin-right: 0px;
+      }
+    }
+  }
+
+  .logo {
+    height: 40px;
+  }
+
+  .iniciais {
+    background: $light-gray;
+    border-radius: 5px;
+    height: 35px;
+    width: 35px;
+    text-align: center;
+
+    span {
+      color: $dark-gray;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  }
+}

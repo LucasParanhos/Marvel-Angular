@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -8,13 +8,13 @@ import { HeroesListComponent } from './heroes-list/heroes-list.component';
 
 const routes: Routes = [
   {
+    path: 'list',
+    component: HeroesListComponent,
+  },
+  {
     path: ':id/detail',
     component: HeroesDetailComponent,
     pathMatch: 'full',
-  },
-  {
-    path: 'list',
-    component: HeroesListComponent,
   },
   {
     path: '',
@@ -26,6 +26,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [HeroesListComponent, HeroesDetailComponent],
   imports: [
+    RouterModule,
+    RouterModule.forChild(routes),
     CommonModule
   ]
 })

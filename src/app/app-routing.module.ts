@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HeroesModule } from './pages/heroes/heroes.module';
-
 const routes: Routes = [
   {
     path: 'heroes',
     loadChildren: () =>
       import('./pages/heroes/heroes.module').then((m) => m.HeroesModule),
+    pathMatch: 'full',
   },
   {
     path: '',
     redirectTo: 'heroes',
+    pathMatch: 'full',
   },
   {
     path: '*',
