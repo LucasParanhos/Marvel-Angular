@@ -9,7 +9,10 @@
   font-weight: bold;
   margin-left: 15px;
   text-overflow: ellipsis;
-  line-clamp: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .hero-image {
