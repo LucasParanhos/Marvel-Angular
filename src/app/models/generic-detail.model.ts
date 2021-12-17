@@ -3,6 +3,6 @@ import { ItemsModel } from './items.model';
 export interface GenericDetailModel {
   available: number;
   collectionURI: string;
-  items: [ItemsModel];
+  items: ItemsModel[];
   returned: number;
 }

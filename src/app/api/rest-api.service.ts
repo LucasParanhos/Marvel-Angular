@@ -1,10 +1,14 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+  HttpResponse,
+} from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { retry } from 'rxjs/operators';
+import { map, retry } from 'rxjs/operators';
 
-import { AbstractModel } from 'src/app/models/abstract.model';
-
+import { AbstractModel, PageModel, PageImpl } from 'src/app/models';
 import { environment } from 'src/environments/environment';
 
 const RETRY = 1;
@@ -12,7 +16,7 @@ const RETRY = 1;
 // Cabeçalho utilizado nas requisições imutáveis (GET / HEAD) realizadas para as APIs
 // de cadastros (https://api.dominio.com.br/cadastros/**), ignorando o Service Worker e
 // consequentemente baixando o tempo de resposta em quase 300ms.
-const HEADER_NGSW_BYPASS = { 'ngsw-bypass': 'true' };
+const HEADERS = {  };
 
 const normalizeUrl = (url: string): string => {
   return url
@@ -66,7 +70,7 @@ export const findBy = <T extends AbstractModel>(
 ): Observable<T[]> => {
   return http
     .get<T[]>(endpoint, {
-      headers: HEADER_NGSW_BYPASS,
+      headers: HEADERS,
       params: httpParams,
     })
     .pipe(retry(RETRY));
@@ -80,7 +84,7 @@ export const findById = <T extends AbstractModel>(
   let url = `${endpoint}/${id}`;
   url = normalizeUrl(url);
 
-  return http.get<T>(url, { headers: HEADER_NGSW_BYPASS }).pipe(retry(RETRY));
+  return http.get<T>(url, { headers: HEADERS }).pipe(retry(RETRY));
 };
 
 export const findAll = <T extends AbstractModel>(
@@ -88,6 +92,37 @@ export const findAll = <T extends AbstractModel>(
   endpoint: string
 ): Observable<T[]> => {
   return http.get<T[]>(endpoint).pipe(retry(RETRY));
+};
+
+export const query = <T extends AbstractModel>(
+  http: HttpClient,
+  endpoint: string,
+  params: HttpParams
+): Observable<PageModel<T>> => {
+  return http
+    .get<PageModel<T>>(endpoint, {
+      params: params,
+      headers: HEADERS,
+      observe: 'response',
+    })
+    .pipe(
+      retry(RETRY),
+      map((response: HttpResponse<any>) => prepareQueryResponse<T>(response))
+    );
+};
+
+const prepareQueryResponse = <T extends AbstractModel>(
+  response: HttpResponse<any>
+  ): PageModel<T> => {
+  return PageImpl.of(
+    response.body.code,
+    response.body.status,
+    response.body.copyright,
+    response.body.attributionText,
+    response.body.attributionHTML,
+    response.body.etag,
+    response.body.data
+  );
 };
 
 const authdata = () => {
@@ -105,8 +140,10 @@ export abstract class RestApiService<T extends AbstractModel> {
     this.apiUrl = environment.api.base_url;
 
     if (!this.endpoint.startsWith('http')) {
-      this.endpoint = `${this.apiUrl}/${this.endpoint.replace('/', '')}
-      `;
+      this.endpoint = `${this.apiUrl}/${this.endpoint.replace(
+        '/',
+        ''
+      )}${authdata()}`;
     }
   }
 
@@ -132,5 +169,9 @@ export abstract class RestApiService<T extends AbstractModel> {
 
   findAll(): Observable<T[]> {
     return findAll(this.http, `${this.endpoint}`);
+  }
+
+  query(params: HttpParams): Observable<PageModel<T>> {
+    return query(this.http, this.endpoint, params);
   }
 }

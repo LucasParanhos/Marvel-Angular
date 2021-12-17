@@ -1,6 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card'
 
 import { HeroesDetailComponent } from './heroes-detail/heroes-detail.component';
 import { HeroesListComponent } from './heroes-list/heroes-list.component';
@@ -28,7 +29,8 @@ const routes: Routes = [
   imports: [
     RouterModule,
     RouterModule.forChild(routes),
-    CommonModule
+    CommonModule,
+    MatCardModule,
   ]
 })
 export class HeroesModule { }

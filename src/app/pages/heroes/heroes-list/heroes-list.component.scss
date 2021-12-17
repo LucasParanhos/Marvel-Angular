@@ -1,4 +1,17 @@
-.page-title{
+.page-title {
   font-weight: bold;
   text-align: center;
+}
+
+.hero-name {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-weight: bold;
+  margin-left: 15px;
+  text-overflow: ellipsis;
+  line-clamp: 1;
+}
+
+.hero-image {
+  border-radius: 5px;
 }

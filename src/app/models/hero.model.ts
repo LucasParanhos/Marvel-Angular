@@ -13,5 +13,5 @@ export interface HeroModel extends AbstractModel {
   series: GenericDetailModel;
   stories: GenericDetailModel;
   events: GenericDetailModel;
-  urls: [UrlsModel];
+  urls: UrlsModel[];
 }
