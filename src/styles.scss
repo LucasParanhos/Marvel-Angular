@@ -48,10 +48,20 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+//Material adaptions
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: $white;
+}
+
+// Custom classes
 .mb-10{
   margin-bottom: 10px;
 }
 
 .d-flex{
   display: flex !important;
+}
+
+.w-100{
+  width: 100%;
 }

@@ -1,5 +1,13 @@
 <h1 class="page-title">Busca de personagens</h1>
 
+<h3 class="titulo-busca">Nome do personagem</h3>
+<mat-form-field class="w-100" appearance="fill">
+  <mat-label>Buscar</mat-label>
+  <input type="text" matInput (change)="searchHero($event)" />
+  <mat-icon matSuffix>search</mat-icon>
+</mat-form-field>
+
+<p class="nomes-personagens">Personagem</p>
 <mat-card *ngFor="let hero of model" class="mb-10">
   <mat-card-content class="d-flex">
     <div class="d-flex">
@@ -17,3 +25,4 @@
     </div>
   </mat-card-content>
 </mat-card>
+<h3 [hidden]="hasResults">Ops... parece que não encontramos nenhum personagem com esse nome</h3>
