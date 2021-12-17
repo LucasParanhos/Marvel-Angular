@@ -5,6 +5,8 @@ import { retry } from 'rxjs/operators';
 
 import { AbstractModel } from 'src/app/models/abstract.model';
 
+import { environment } from 'src/environments/environment';
+
 const RETRY = 1;
 
 // Cabeçalho utilizado nas requisições imutáveis (GET / HEAD) realizadas para as APIs
@@ -88,6 +90,10 @@ export const findAll = <T extends AbstractModel>(
   return http.get<T[]>(endpoint).pipe(retry(RETRY));
 };
 
+const authdata = () => {
+  return `?apikey=${environment.api.public_key}`;
+};
+
 export abstract class RestApiService<T extends AbstractModel> {
   protected apiUrl: string;
 
@@ -96,7 +102,12 @@ export abstract class RestApiService<T extends AbstractModel> {
     protected http: HttpClient,
     protected options?: any
   ) {
-    this.apiUrl = endpoint;
+    this.apiUrl = environment.api.base_url;
+
+    if (!this.endpoint.startsWith('http')) {
+      this.endpoint = `${this.apiUrl}/${this.endpoint.replace('/', '')}
+      `;
+    }
   }
 
   create(model: T): Observable<T> {
