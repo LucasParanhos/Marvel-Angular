@@ -14,7 +14,7 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "types": ["crypto-js"],
+    "types": ["crypto-js", "node", "jest"],
     "target": "es2017",
     "module": "es2020",
     "lib": ["es2018", "dom"]
