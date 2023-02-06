@@ -18,6 +18,7 @@ export class HeroesListComponent {
   hasResults = false;
 
   constructor(public api: HeroesService) {
+    debugger;
     this.queryPage();
   }
 

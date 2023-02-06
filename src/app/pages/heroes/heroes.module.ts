@@ -6,6 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatIconModule } from '@angular/material/icon'
 
+import { MarvelComponentLibraryModule } from 'marvel-component-library';
+
 import { HeroesDetailComponent } from './heroes-detail/heroes-detail.component';
 import { HeroesListComponent } from './heroes-list/heroes-list.component';
 
@@ -37,6 +39,7 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MarvelComponentLibraryModule,
   ]
 })
 export class HeroesModule { }

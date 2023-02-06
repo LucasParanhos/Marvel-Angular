@@ -5,7 +5,7 @@ const routes: Routes = [
   {
     path: 'heroes',
     loadChildren: () =>
-      import('./pages/heroes/heroes.module').then((m) => m.HeroesModule),
+      import('./pages/heroes/heroes.module').then((m) => m.HeroesModule).catch( err => console.log('Oh no!', err)),
   },
   {
     path: '',

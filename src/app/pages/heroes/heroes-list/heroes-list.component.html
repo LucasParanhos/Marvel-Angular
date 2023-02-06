@@ -8,7 +8,7 @@
 </mat-form-field>
 
 <p class="nomes-personagens">Personagem</p>
-<mat-card *ngFor="let hero of model" class="mb-10">
+<!-- <mat-card *ngFor="let hero of model" class="mb-10">
   <mat-card-content class="d-flex">
     <div class="d-flex">
       <img
@@ -24,5 +24,15 @@
       </h3>
     </div>
   </mat-card-content>
-</mat-card>
-<h3 [hidden]="hasResults">Ops... parece que não encontramos nenhum personagem com esse nome</h3>
+</mat-card> -->
+<div *ngFor="let hero of model">
+  <lib-hero-card
+    [cardTitle]="hero.name"
+    [cardImageAlt]="hero.name"
+    [cardImage]="hero.thumbnail.path + '.' + hero.thumbnail.extension"
+    [cardDescription]="hero.description"
+  ></lib-hero-card>
+</div>
+<h3 [hidden]="hasResults">
+  Ops... parece que não encontramos nenhum personagem com esse nome
+</h3>
