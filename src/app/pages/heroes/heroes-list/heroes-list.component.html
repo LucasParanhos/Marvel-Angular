@@ -1,38 +1,30 @@
-<h1 class="page-title">Busca de personagens</h1>
+<!-- <h1 class="page-title">Search for characters</h1> -->
 
-<h3 class="titulo-busca">Nome do personagem</h3>
+<h3 class="search-title">Name of the character</h3>
 <mat-form-field class="w-100" appearance="fill">
-  <mat-label>Buscar</mat-label>
+  <mat-label>Search</mat-label>
   <input id="search-bar" type="text" matInput (change)="searchHero($event)" />
   <mat-icon matSuffix>search</mat-icon>
 </mat-form-field>
 
-<p class="nomes-personagens">Personagem</p>
-<!-- <mat-card *ngFor="let hero of model" class="mb-10">
-  <mat-card-content class="d-flex">
-    <div class="d-flex">
-      <img
-        mat-card-sm-image
-        [src]="hero.thumbnail.path + '.' + hero.thumbnail.extension"
-        [alt]="hero.name"
-        class="hero-image"
-      />
-    </div>
-    <div class="d-flex">
-      <h3 class="hero-name" [title]="hero.name">
-        {{ hero.name }}
-      </h3>
-    </div>
-  </mat-card-content>
-</mat-card> -->
-<div *ngFor="let hero of model">
+<p class="nomes-personagens">Characters</p>
+<div
+  class="hero-list"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll()"
+>
   <lib-hero-card
+    *ngFor="let hero of model"
     [cardTitle]="hero.name"
     [cardImageAlt]="hero.name"
     [cardImage]="hero.thumbnail.path + '.' + hero.thumbnail.extension"
-    [cardDescription]="hero.description"
+    [cardDescription]="
+      hero.description == '' ? 'No description found' : hero.description
+    "
   ></lib-hero-card>
 </div>
 <h3 [hidden]="hasResults">
-  Ops... parece que não encontramos nenhum personagem com esse nome
+  Ops... looks like there's no character with this name
 </h3>

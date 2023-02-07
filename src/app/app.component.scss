@@ -2,7 +2,7 @@
 
 .header {
   .mat-toolbar {
-    background-color: $white;
+    background-color: $black;
   }
 
   .dados {
@@ -11,7 +11,7 @@
     text-align: right;
     margin-left: auto;
     margin-right: 10px;
-    color: $dark-gray;
+    color: $light-gray;
     @media screen and (max-width: $mobile-max-width) {
       display: flex;
       flex-direction: column;
@@ -32,14 +32,14 @@
   }
 
   .iniciais {
-    background: $light-gray;
+    background: $dark-gray;
     border-radius: 5px;
     height: 35px;
     width: 35px;
     text-align: center;
 
     span {
-      color: $dark-gray;
+      color: $light-gray;
       font-weight: bold;
       font-size: 18px;
     }

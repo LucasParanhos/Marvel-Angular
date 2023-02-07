@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatIconModule } from '@angular/material/icon'
 
 import { MarvelComponentLibraryModule } from 'marvel-component-library';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { HeroesDetailComponent } from './heroes-detail/heroes-detail.component';
 import { HeroesListComponent } from './heroes-list/heroes-list.component';
@@ -40,6 +41,7 @@ const routes: Routes = [
     MatInputModule,
     MatIconModule,
     MarvelComponentLibraryModule,
+    InfiniteScrollModule
   ]
 })
 export class HeroesModule { }

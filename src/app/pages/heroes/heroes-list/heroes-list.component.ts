@@ -11,14 +11,13 @@ import { HeroesService } from '../heroes.service';
 export class HeroesListComponent {
   model: HeroModel[] = [];
   offset = 0;
-  limit = 10;
+  limit = 20;
   totalPages = 0;
 
   heroName = '';
   hasResults = false;
 
   constructor(public api: HeroesService) {
-    debugger;
     this.queryPage();
   }
 
@@ -30,7 +29,7 @@ export class HeroesListComponent {
       params = params.set('name', this.heroName);
     }
     this.api.heroesApi.query(params).subscribe((result) => {
-      this.model = result.data.results;
+      this.model = this.model.concat(result.data.results);
       this.hasResults = result.data.count > 0;
       this.totalPages = Math.floor(result.data.total / this.limit);
     });
@@ -38,6 +37,13 @@ export class HeroesListComponent {
 
   searchHero(searchChange: Event): void {
     this.heroName = (searchChange.target as HTMLInputElement).value;
+    this.offset = 0;
+    this.model = [];
+    this.queryPage();
+  }
+
+  onScroll() {
+    this.offset += this.limit;
     this.queryPage();
   }
 }
