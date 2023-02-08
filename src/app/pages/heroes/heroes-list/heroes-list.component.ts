@@ -1,5 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { HeroModel } from 'src/app/models';
 import { HeroesService } from '../heroes.service';
@@ -17,7 +18,7 @@ export class HeroesListComponent {
   heroName = '';
   hasResults = false;
 
-  constructor(public api: HeroesService) {
+  constructor(public api: HeroesService, private router: Router) {
     this.queryPage();
   }
 
@@ -26,7 +27,7 @@ export class HeroesListComponent {
       .set('offset', this.offset)
       .set('limit', this.limit);
     if (this.heroName) {
-      params = params.set('name', this.heroName);
+      params = params.set('nameStartsWith', this.heroName);
     }
     this.api.heroesApi.query(params).subscribe((result) => {
       this.model = this.model.concat(result.data.results);
@@ -46,4 +47,8 @@ export class HeroesListComponent {
     this.offset += this.limit;
     this.queryPage();
   }
+
+  detailHero = (id: string): void => {
+    this.router.navigate([`/heroes/${id}/detail`]);
+  };
 }

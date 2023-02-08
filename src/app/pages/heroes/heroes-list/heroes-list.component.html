@@ -11,7 +11,7 @@
 <div
   class="hero-list"
   infiniteScroll
-  [infiniteScrollDistance]="2"
+  [infiniteScrollDistance]="4"
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
 >
@@ -23,6 +23,8 @@
     [cardDescription]="
       hero.description == '' ? 'No description found' : hero.description
     "
+    [buttonFunction]="detailHero"
+    [cardDataId]="hero.id ? hero.id.toString(): ''"
   ></lib-hero-card>
 </div>
 <h3 [hidden]="hasResults">

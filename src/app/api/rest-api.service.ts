@@ -16,7 +16,7 @@ const RETRY = 1;
 // Cabeçalho utilizado nas requisições imutáveis (GET / HEAD) realizadas para as APIs
 // de cadastros (https://api.dominio.com.br/cadastros/**), ignorando o Service Worker e
 // consequentemente baixando o tempo de resposta em quase 300ms.
-const HEADERS = {  };
+const HEADERS = {};
 
 const normalizeUrl = (url: string): string => {
   return url
@@ -84,7 +84,10 @@ export const findById = <T extends AbstractModel>(
   let url = `${endpoint}/${id}`;
   url = normalizeUrl(url);
 
-  return http.get<T>(url, { headers: HEADERS }).pipe(retry(RETRY));
+  return http.get<T>(url, { headers: HEADERS, observe: 'response' }).pipe(
+    retry(RETRY),
+    map((response: HttpResponse<any>) => response.body.data.results[0])
+  );
 };
 
 export const findAll = <T extends AbstractModel>(
@@ -113,7 +116,7 @@ export const query = <T extends AbstractModel>(
 
 const prepareQueryResponse = <T extends AbstractModel>(
   response: HttpResponse<any>
-  ): PageModel<T> => {
+): PageModel<T> => {
   return PageImpl.of(
     response.body.code,
     response.body.status,
@@ -140,38 +143,35 @@ export abstract class RestApiService<T extends AbstractModel> {
     this.apiUrl = environment.api.base_url;
 
     if (!this.endpoint.startsWith('http')) {
-      this.endpoint = `${this.apiUrl}/${this.endpoint.replace(
-        '/',
-        ''
-      )}${authdata()}`;
+      this.endpoint = `${this.apiUrl}/${this.endpoint.replace('/', '')}`;
     }
   }
 
   create(model: T): Observable<T> {
-    return create(this.http, this.endpoint, model);
+    return create(this.http, this.endpoint + authdata(), model);
   }
 
   update(model: T): Observable<T> {
-    return update(this.http, this.endpoint, model);
+    return update(this.http, this.endpoint + authdata(), model);
   }
 
   delete(id: string | number): Observable<void> {
-    return destroy(this.http, this.endpoint, id);
+    return destroy(this.http, this.endpoint, id + authdata());
   }
 
   findBy(httpParams: HttpParams): Observable<T[]> {
-    return findBy(this.http, this.endpoint, httpParams);
+    return findBy(this.http, this.endpoint + authdata(), httpParams);
   }
 
   findById(id: string | number): Observable<T> {
-    return findById(this.http, this.endpoint, id);
+    return findById(this.http, this.endpoint, id + authdata());
   }
 
   findAll(): Observable<T[]> {
-    return findAll(this.http, `${this.endpoint}`);
+    return findAll(this.http, this.endpoint + authdata());
   }
 
   query(params: HttpParams): Observable<PageModel<T>> {
-    return query(this.http, this.endpoint, params);
+    return query(this.http, this.endpoint + authdata(), params);
   }
 }

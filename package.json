@@ -22,8 +22,8 @@
     "@angular/router": "^12.2.17",
     "crypto-js": "^4.1.1",
     "jest": "^28.1.3",
-    "marvel-component-library": "0.1.0",
-    "ngx-infinite-scroll": "^10.0.0",
+    "marvel-component-library": "0.1.1",
+    "ngx-infinite-scroll": "^10.0.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.5.0",
     "zone.js": "^0.11.8"

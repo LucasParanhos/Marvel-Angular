@@ -1,11 +1,18 @@
 @import "variables.scss";
 
 .header {
+  height: 64px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
   .mat-toolbar {
     background-color: $black;
   }
 
-  .dados {
+  .data {
     font-size: 12px;
     line-height: 14px;
     text-align: right;
@@ -17,7 +24,7 @@
       flex-direction: column;
     }
 
-    .nome {
+    .name {
       margin-right: 5px;
       font-weight: bold;
 
@@ -28,10 +35,11 @@
   }
 
   .logo {
+    cursor: pointer;
     height: 40px;
   }
 
-  .iniciais {
+  .initials {
     background: $dark-gray;
     border-radius: 5px;
     height: 35px;
