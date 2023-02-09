@@ -1,4 +1,53 @@
-<div *ngIf="hero">
-  <p>{{ hero.name }}</p>
-  <p>{{ hero.description }}</p>
-</div>
+<mat-card class="hero-profile" *ngIf="hero">
+  <mat-card-header class="marvel-banner">
+    <img
+      class="hero-profile-image"
+      [src]="hero.thumbnail.path + '.' + hero.thumbnail.extension"
+      [alt]="hero.name + ' profile image'"
+    />
+    <div class="hero-info">
+      <mat-card-title class="hero-name">{{ hero.name }}</mat-card-title>
+      <p>Last modified: {{ hero.modified | date : "yyyy/MM/dd" }}</p>
+    </div>
+  </mat-card-header>
+</mat-card>
+
+<mat-card *ngIf="hero && hero?.description">
+  <mat-card-title class="sub-header">Description: </mat-card-title>
+
+  <mat-card-content>
+    <p>{{ hero.description }}</p>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="hero && hero.comics && hero.comics.available > 0">
+  <mat-card-title class="sub-header">Comics: </mat-card-title>
+
+  <mat-card-content>
+    <p *ngFor="let comic of hero.comics.items">{{ comic.name }}</p>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="hero && hero.series && hero.series.available > 0">
+  <mat-card-title class="sub-header">Series: </mat-card-title>
+
+  <mat-card-content>
+    <p *ngFor="let serie of hero.series.items">{{ serie.name }}</p>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="hero && hero.stories && hero.stories.available > 0">
+  <mat-card-title class="sub-header">Stories: </mat-card-title>
+
+  <mat-card-content>
+    <p *ngFor="let storie of hero.stories.items">{{ storie.name }}</p>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="hero && hero.events && hero.events.available > 0">
+  <mat-card-title class="sub-header">Events: </mat-card-title>
+
+  <mat-card-content>
+    <p *ngFor="let event of hero.events.items">{{ event.name }}</p>
+  </mat-card-content>
+</mat-card>
